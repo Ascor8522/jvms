@@ -1,0 +1,21 @@
+name: Deno CI
+
+on: push
+
+jobs:
+  ci_cd:
+    name: CI / CD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+      - name: Installing Deno
+        uses: denolib/setup-deno@v2
+        with:
+          deno-version: v1.x
+      - name: Checking Deno
+        run: deno --version
+      - name: Caching dependencies
+        run: deno cache index.ts
+      - name: Running Deno
+        run: deno run -A --unstable index.ts
